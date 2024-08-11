@@ -1,9 +1,10 @@
 <?php
 // Traitement du formulaire
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message'])) {
-    $destinataire = $_POST['email'];
+    $destinataire = "assakoprecieux@gmail.com";
     $sujet = $_POST['subject'];
     $message = $_POST['message'];
+
     
 // Fonction pour envoyer un email
 function envoyer_email($destinataire, $sujet, $message) {
@@ -35,12 +36,14 @@ function envoyer_email($destinataire, $sujet, $message) {
         return false;
     }
 }
-$expediteur =  "contact@csi.cg";
+
+    $expediteur =  $_POST["email"];
+    $nom = $_POST["name"];
     // Correction de l'envoi de l'email
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: CSI < " . $expediteur . " >\r\n";
-    $headers .= "Reply-To: < " . $expediteur . " >\r\n";
+    $headers .= "From: " . $nom . " <" . $expediteur . ">\r\n";
+    $headers .= "Reply-To: <" . $expediteur . ">\r\n";
 
     if (mail($destinataire, $sujet, $message, $headers)) {
         echo 'Email envoyée avec succès.';
