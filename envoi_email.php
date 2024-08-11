@@ -1,13 +1,13 @@
 <?php
 // Traitement du formulaire
 if (isset($_POST['name']) && isset($_POST['email']) && isset($_POST['subject']) && isset($_POST['message'])) {
-    $destinataire = "assakoprecieux@gmail.com";
+    $destinataire = "contact@csi.cg";
     $sujet = $_POST['subject'];
     $message = $_POST['message'];
 
     
 // Fonction pour envoyer un email
-function envoyer_email($destinataire, $sujet, $message) {
+/* function envoyer_email($destinataire, $sujet, $message) {
     // Configuration du serveur SMTP
     $smtp = 'smtp.gmail.com';
     $port = 587;
@@ -35,18 +35,22 @@ function envoyer_email($destinataire, $sujet, $message) {
     } else {
         return false;
     }
-}
+} */
 
     $expediteur =  $_POST["email"];
     $nom = $_POST["name"];
-    // Correction de l'envoi de l'email
+    // Correction de l'envoi de l'email 
     $headers = "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
     $headers .= "From: " . $nom . " <" . $expediteur . ">\r\n";
     $headers .= "Reply-To: <" . $expediteur . ">\r\n";
+    $headers .= "Return-Path: <" . $expediteur . ">\r\n";
+    $headers .= "Sender: <" . $expediteur . ">\r\n";
+    $headers .= "Message-ID: <" . time() . "@" . $_SERVER['SERVER_NAME'] . ">\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
 
     if (mail($destinataire, $sujet, $message, $headers)) {
-        echo 'Email envoyée avec succès.';
+        echo '<script>alert("Email envoyée avec succès."); window.location.href="contact.php";</script>';
     } else {
         echo 'Échec de l\'envoi de l\'email.';
     }
